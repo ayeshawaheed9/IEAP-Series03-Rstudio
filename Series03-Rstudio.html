@@ -170,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 9    pp ID3  400</code></pre>
 </div>
 </div>
-<p>Data are missing for ID3 in the group pp.&nbsp;We remove ID3.</p>
+<p>Data for groups is imbalanced for ID3 in the group pp.&nbsp;We remove ID3.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ID <span class="sc">!=</span> <span class="st">"ID3"</span>) <span class="sc">%&gt;%</span> <span class="fu">droplevels</span>()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df<span class="sc">$</span>ID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 8    pp  R2 760</code></pre>
 </div>
 </div>
-<p>Data are missing for REP3 in the groups pp and ap. We remove REP3.</p>
+<p>Data imbalanced for REP3 in the groups pp and ap. We remove REP3.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(REP <span class="sc">!=</span> <span class="st">"R3"</span>) <span class="sc">%&gt;%</span> <span class="fu">droplevels</span>()</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(GROUP, REP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

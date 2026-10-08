@@ -49,7 +49,7 @@ Count the data points for each combination of factors, to look for missing data.
 df %>% count(GROUP, ID)
 ```
 
-Data are missing for ID3 in the group pp. We remove ID3.
+Data for groups is imbalanced for ID3 in the group pp. We remove ID3.
 
 ```{r remove-id3}
 df <- df %>% filter(ID != "ID3") %>% droplevels()
@@ -64,7 +64,7 @@ df %>% count(REP)
 df %>% count(GROUP, REP)
 ```
 
-Data are missing for REP3 in the groups pp and ap. We remove REP3.
+Data imbalanced for REP3 in the groups pp and ap. We remove REP3.
 
 ```{r remove-rep3}
 df <- df %>% filter(REP != "R3") %>% droplevels()
