@@ -4,3 +4,75 @@ format: html
 ---
 
 # 1 ANOVA: Analysis of variance
+
+We want to reproduce Fig 3 of the article: the effect of difficulty (ID) on movement time (MT) in three groups (ap, cp, pp).
+
+## Section: 1.1
+
+1. **Is the effect of difficulty the same in all groups?**
+   We look at the **GROUP x ID interaction**. If it is significant, the effect of difficulty is different between groups (for example, much bigger in one group than in the others). If it is not significant, difficulty has about the same effect in all groups.
+   
+2. **How do we visualize this?**
+   We plot movement time (MT, y axis) as a function of difficulty (ID, x axis), with one line per group. If the lines are parallel, the effect is the same in all groups. If the slopes are different, the effect is different. The slope of each regression line tells us how many seconds MT increases when ID increases by one bit.
+
+3. **Is there a significant difference?**
+   We read the p-values of the ANOVA. If p < .05, the difference is unlikely to be due to chance. We look at three effects: GROUP (do the groups differ overall?), ID (does difficulty change MT?) and GROUP x ID (does difficulty change MT differently in each group?).
+
+4. **What sentence do we write in the report?**
+  We write one short sentence for each result of the ANOVA, with its numbers in brackets. The numbers are F, the degrees of freedom and the p-value. For example: “Movement time increased with difficulty (F = ..., p < ...). This increase was different between the groups (F = ..., p < ...).” The final sentence with our real numbers is in section 1.3.
+   
+GROUP is a between-subject factor and ID is a within-subject factor, so we need a **mixed ANOVA**.
+
+## 1.2 What library to answer the above questions?
+
+- `tidyverse` to reorganize the data and plot
+- `ez` to run the ANOVA
+
+```{r libraries}
+library(tidyverse)
+library(ez)
+```
+
+## 1.3 Data reorganization
+
+```{r read-data}
+df <- read_table("data/Results.txt", show_col_types = FALSE) %>%
+  rename(MT = MovementTime) %>%
+  mutate(GROUP = factor(GROUP), SUBJ = factor(SUBJ),
+         ID = factor(ID), REP = factor(REP)) %>%
+  as.data.frame()
+```
+
+Count the data points for each combination of factors, to look for missing data.
+
+```{r count-id}
+df %>% count(GROUP, ID)
+```
+
+Data for groups is imbalanced for ID3 in the group pp. We remove ID3.
+
+```{r remove-id3}
+df <- df %>% filter(ID != "ID3") %>% droplevels()
+levels(df$ID)
+df %>% count(GROUP, ID)
+```
+
+The data are still unbalanced. Let's check REP.
+
+```{r count-rep}
+df %>% count(REP)
+df %>% count(GROUP, REP)
+```
+
+Data imbalanced for REP3 in the groups pp and ap. We remove REP3.
+
+```{r remove-rep3}
+df <- df %>% filter(REP != "R3") %>% droplevels()
+df %>% count(GROUP, REP)
+```
+
+Number of participants per group:
+
+```{r count-subj}
+df %>% distinct(GROUP, SUBJ) %>% count(GROUP, name = "count") %>% as.data.frame()
+```

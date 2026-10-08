@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -71,6 +106,135 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="anova-analysis-of-variance" class="level1">
 <h1>1 ANOVA: Analysis of variance</h1>
+<p>We want to reproduce Fig 3 of the article: the effect of difficulty (ID) on movement time (MT) in three groups (ap, cp, pp).</p>
+<section id="section-1.1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1.1">Section: 1.1</h2>
+<ol type="1">
+<li><p><strong>Is the effect of difficulty the same in all groups?</strong> We look at the <strong>GROUP x ID interaction</strong>. If it is significant, the effect of difficulty is different between groups (for example, much bigger in one group than in the others). If it is not significant, difficulty has about the same effect in all groups.</p></li>
+<li><p><strong>How do we visualize this?</strong> We plot movement time (MT, y axis) as a function of difficulty (ID, x axis), with one line per group. If the lines are parallel, the effect is the same in all groups. If the slopes are different, the effect is different. The slope of each regression line tells us how many seconds MT increases when ID increases by one bit.</p></li>
+<li><p><strong>Is there a significant difference?</strong> We read the p-values of the ANOVA. If p &lt; .05, the difference is unlikely to be due to chance. We look at three effects: GROUP (do the groups differ overall?), ID (does difficulty change MT?) and GROUP x ID (does difficulty change MT differently in each group?).</p></li>
+<li><p><strong>What sentence do we write in the report?</strong> We write one short sentence for each result of the ANOVA, with its numbers in brackets. The numbers are F, the degrees of freedom and the p-value. For example: “Movement time increased with difficulty (F = …, p &lt; …). This increase was different between the groups (F = …, p &lt; …).” The final sentence with our real numbers is in section 1.3.</p></li>
+</ol>
+<p>GROUP is a between-subject factor and ID is a within-subject factor, so we need a <strong>mixed ANOVA</strong>.</p>
+</section>
+<section id="what-library-to-answer-the-above-questions" class="level2">
+<h2 class="anchored" data-anchor-id="what-library-to-answer-the-above-questions">1.2 What library to answer the above questions?</h2>
+<ul>
+<li><code>tidyverse</code> to reorganize the data and plot</li>
+<li><code>ez</code> to run the ANOVA</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ez)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'lme4':
+  method           from
+  na.action.merMod car </code></pre>
+</div>
+</div>
+</section>
+<section id="data-reorganization" class="level2">
+<h2 class="anchored" data-anchor-id="data-reorganization">1.3 Data reorganization</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">"data/Results.txt"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">MT =</span> MovementTime) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GROUP =</span> <span class="fu">factor</span>(GROUP), <span class="at">SUBJ =</span> <span class="fu">factor</span>(SUBJ),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">ID =</span> <span class="fu">factor</span>(ID), <span class="at">REP =</span> <span class="fu">factor</span>(REP)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Count the data points for each combination of factors, to look for missing data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(GROUP, ID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  GROUP  ID    n
+1    ap ID1  740
+2    ap ID2  740
+3    ap ID3  740
+4    cp ID1 1140
+5    cp ID2 1140
+6    cp ID3 1140
+7    pp ID1  760
+8    pp ID2  760
+9    pp ID3  400</code></pre>
+</div>
+</div>
+<p>Data for groups is imbalanced for ID3 in the group pp.&nbsp;We remove ID3.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ID <span class="sc">!=</span> <span class="st">"ID3"</span>) <span class="sc">%&gt;%</span> <span class="fu">droplevels</span>()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df<span class="sc">$</span>ID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ID1" "ID2"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(GROUP, ID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  GROUP  ID    n
+1    ap ID1  740
+2    ap ID2  740
+3    cp ID1 1140
+4    cp ID2 1140
+5    pp ID1  760
+6    pp ID2  760</code></pre>
+</div>
+</div>
+<p>The data are still unbalanced. Let’s check REP.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(REP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  REP    n
+1  R1 2040
+2  R2 2040
+3  R3 1200</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(GROUP, REP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  GROUP REP   n
+1    ap  R1 520
+2    ap  R2 520
+3    ap  R3 440
+4    cp  R1 760
+5    cp  R2 760
+6    cp  R3 760
+7    pp  R1 760
+8    pp  R2 760</code></pre>
+</div>
+</div>
+<p>Data imbalanced for REP3 in the groups pp and ap. We remove REP3.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(REP <span class="sc">!=</span> <span class="st">"R3"</span>) <span class="sc">%&gt;%</span> <span class="fu">droplevels</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(GROUP, REP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  GROUP REP   n
+1    ap  R1 520
+2    ap  R2 520
+3    cp  R1 760
+4    cp  R2 760
+5    pp  R1 760
+6    pp  R2 760</code></pre>
+</div>
+</div>
+<p>Number of participants per group:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GROUP, SUBJ) <span class="sc">%&gt;%</span> <span class="fu">count</span>(GROUP, <span class="at">name =</span> <span class="st">"count"</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  GROUP count
+1    ap    13
+2    cp    19
+3    pp    19</code></pre>
+</div>
+</div>
+</section>
 </section>
 
 </main>
