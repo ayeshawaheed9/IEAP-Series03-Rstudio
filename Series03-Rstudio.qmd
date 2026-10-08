@@ -1,0 +1,6 @@
+---
+title: "IEAP-Rstudio-Series03: Data wrangling and ANOVA"
+format: html
+---
+
+# 1 ANOVA: Analysis of variance
