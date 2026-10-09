@@ -7,3 +7,17 @@ data_anova <- df %>%
   group_by(GROUP, SUBJ, ID) %>%
   summarise(MT = mean(MT), .groups = "drop")
 ```
+
+### ANOVA
+
+```{r anova}
+anova_res <- ezANOVA(data = data_anova,
+                     dv = MT,
+                     wid = SUBJ,
+                     within = ID,
+                     between = GROUP,
+                     detailed = FALSE)
+anova_res$ANOVA
+```
+
+Movement time increased with difficulty, F(1, 48) = 30.78, p < .001. This increase was different between the groups, F(2, 48) = 11.58, p < .001.
