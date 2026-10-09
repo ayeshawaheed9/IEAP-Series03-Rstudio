@@ -66,3 +66,11 @@ p <- ggplot(means, aes(x = ID_num, y = MT, colour = GROUP)) +
 
 p
 ```
+
+## 1.6 Export the graph as a PDF
+
+```{r export}
+dir.create("figures", showWarnings = FALSE)
+ggsave("figures/fig3_MT_ID.pdf", plot = p, width = 8, height = 6,
+       units = "in")
+```
