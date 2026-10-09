@@ -39,3 +39,30 @@ reg_table <- data_reg %>%
 
 reg_table
 ```
+
+
+## 1.5 Graph for publication
+
+```{r graph}
+#| fig-width: 8
+#| fig-height: 6
+means <- data_reg %>%
+  group_by(GROUP, ID_num) %>%
+  summarise(MT = mean(MT), .groups = "drop")
+
+eq_pos <- reg_table %>%
+  ungroup() %>%
+  mutate(x = 1.5, y = 2.7 - 0.3 * row_number())
+
+p <- ggplot(means, aes(x = ID_num, y = MT, colour = GROUP)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE,
+              fullrange = TRUE) +
+  geom_text(data = eq_pos, aes(x = x, y = y, label = label),
+            hjust = 0, show.legend = FALSE) +
+  scale_x_continuous(breaks = c(1, 2), limits = c(0.8, 2.2)) +
+  labs(x = "ID", y = "Movement Time (s)", colour = "Group") +
+  theme_classic()
+
+p
+```
