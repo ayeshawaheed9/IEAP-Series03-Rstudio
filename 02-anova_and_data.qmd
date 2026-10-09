@@ -21,3 +21,21 @@ anova_res$ANOVA
 ```
 
 Movement time increased with difficulty, F(1, 48) = 30.78, p < .001. This increase was different between the groups, F(2, 48) = 11.58, p < .001.
+
+
+## 1.4 Run the linear regression by GROUP
+
+```{r regression}
+data_reg <- data_anova %>%
+  mutate(ID_num = parse_number(as.character(ID)))
+
+reg_table <- data_reg %>%
+  group_by(GROUP) %>%
+  group_modify(~ {
+    m <- lm(MT ~ ID_num, data = .x)
+    tibble(intercept = coef(m)[1], slope = coef(m)[2])
+  }) %>%
+  mutate(label = sprintf("MT = %.3f + %.3f * ID", intercept, slope))
+
+reg_table
+```
