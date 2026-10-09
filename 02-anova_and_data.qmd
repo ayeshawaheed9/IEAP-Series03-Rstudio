@@ -1,0 +1,9 @@
+### One value per participant and ID
+
+The ANOVA wants a single value per participant and per condition: we make the average.
+
+```{r average}
+data_anova <- df %>%
+  group_by(GROUP, SUBJ, ID) %>%
+  summarise(MT = mean(MT), .groups = "drop")
+```
