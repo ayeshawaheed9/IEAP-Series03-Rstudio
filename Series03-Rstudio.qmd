@@ -1,6 +1,8 @@
 ---
 title: "IEAP-Rstudio-Series03: Data wrangling and ANOVA"
-format: html
+author: "LE ROUX Jeanne, WAHEED Ayesha"
+date: today
+format: pdf
 ---
 
 # 1 ANOVA: Analysis of variance
@@ -76,3 +78,5 @@ Number of participants per group:
 ```{r count-subj}
 df %>% distinct(GROUP, SUBJ) %>% count(GROUP, name = "count") %>% as.data.frame()
 ```
+
+{{< include 02-anova_and_data.qmd >}}
