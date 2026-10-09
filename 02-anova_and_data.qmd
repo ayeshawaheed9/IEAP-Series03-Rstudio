@@ -74,3 +74,8 @@ dir.create("figures", showWarnings = FALSE)
 ggsave("figures/fig3_MT_ID.pdf", plot = p, width = 8, height = 6,
        units = "in")
 ```
+
+
+## 1.7 Discuss the differences with the article
+
+Our regression equations (e.g., MT = 0.730 + 0.269 × ID for ap) differ from those in the article. Our method is simpler: we averaged the data per participant and per ID, then ran a classic ANOVA. Nevertheless, the GROUP × ID interaction is significant, F(2, 48) = 11.58, p < .001, so the conclusion is the same: the effect of difficulty depends on the group. The simple method keeps the main pattern of the data: a much steeper increase of movement time with ID in the pp group than in the ap and cp groups. The more sophisticated method of the article changes the exact values (slopes and intercepts), but not this pattern.
