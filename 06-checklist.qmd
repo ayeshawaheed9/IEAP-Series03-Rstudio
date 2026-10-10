@@ -19,16 +19,16 @@ This checklist follows the assignment and the grading criteria.
 
 ## Content of the report
 
-- [ ] Authors and date in the header
-- [ ] Clickable link to the GitHub repository
+- [x] Authors and date in the header
+- [x] Clickable link to the GitHub repository
 - [x] Analysis of our workflow strategy using Git
 - [x] Analysis of the challenges encountered and lessons learned
 - [x] Complete code and answers to the questions (1.1 to 1.7)
 - [x] Data sources, with URLs
 - [x] Scientific references, with DOIs
-- [ ] This checklist
+- [x] This checklist
 
 ## Submission
 
-- [ ] The master document includes all the sub-documents when rendering
-- [ ] PDF file uploaded on Moodle
+- [x] The master document includes all the sub-documents when rendering
+- [x] PDF file uploaded on Moodle
