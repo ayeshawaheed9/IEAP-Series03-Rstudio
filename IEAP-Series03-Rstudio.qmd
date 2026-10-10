@@ -82,3 +82,11 @@ df %>% distinct(GROUP, SUBJ) %>% count(GROUP, name = "count") %>% as.data.frame(
 ```
 
 {{< include 02-anova_and_data.qmd >}}
+
+{{< include 03-git-workflow.qmd >}}
+
+{{< include 04-challenges.qmd >}}
+
+{{< include 05-sources.qmd >}}
+
+{{< include 06-checklist.qmd >}}
