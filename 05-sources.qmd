@@ -1,0 +1,9 @@
+## Data sources
+
+- **`data/Results.txt`**: movement time data used to reproduce Fig 3 of the article below (groups ap, cp and pp; difficulty levels ID1 to ID3; three repetitions). Source: Moodle course "M1: Python, R and Git for data analysis", Series 03. URL: https://moodle.umontpellier.fr/mod/folder/view.php?id=1025707
+
+## References
+
+1. Mottet D, van Dokkum LEH, Froger J, Gouaïch A, Laffont I. Trajectory formation principles are the same after mild or moderate stroke. *PLOS ONE*. 2017 (published 22 March 2017). DOI: [10.1371/journal.pone.0173674](https://doi.org/10.1371/journal.pone.0173674). Fig 3: [10.1371/journal.pone.0173674.g003](https://doi.org/10.1371/journal.pone.0173674.g003).
+2. Wickham H, Averick M, Bryan J, et al. Welcome to the tidyverse. *Journal of Open Source Software*. 2019;4(43):1686. DOI: [10.21105/joss.01686](https://doi.org/10.21105/joss.01686).
+3. Lawrence MA. *ez: Easy Analysis and Visualization of Factorial Experiments* (R package). Available at <https://CRAN.R-project.org/package=ez> (no DOI).
