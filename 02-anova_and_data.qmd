@@ -1,0 +1,81 @@
+### One value per participant and ID
+
+The ANOVA wants a single value per participant and per condition: we make the average.
+
+```{r average}
+data_anova <- df %>%
+  group_by(GROUP, SUBJ, ID) %>%
+  summarise(MT = mean(MT), .groups = "drop")
+```
+
+### ANOVA
+
+```{r anova}
+anova_res <- ezANOVA(data = data_anova,
+                     dv = MT,
+                     wid = SUBJ,
+                     within = ID,
+                     between = GROUP,
+                     detailed = FALSE)
+anova_res$ANOVA
+```
+
+Movement time increased with difficulty, F(1, 48) = 30.78, p < .001. This increase was different between the groups, F(2, 48) = 11.58, p < .001.
+
+
+## 1.4 Run the linear regression by GROUP
+
+```{r regression}
+data_reg <- data_anova %>%
+  mutate(ID_num = parse_number(as.character(ID)))
+
+reg_table <- data_reg %>%
+  group_by(GROUP) %>%
+  group_modify(~ {
+    m <- lm(MT ~ ID_num, data = .x)
+    tibble(intercept = coef(m)[1], slope = coef(m)[2])
+  }) %>%
+  mutate(label = sprintf("MT = %.3f + %.3f * ID", intercept, slope))
+
+reg_table
+```
+
+
+## 1.5 Graph for publication
+
+```{r graph}
+#| fig-width: 8
+#| fig-height: 6
+means <- data_reg %>%
+  group_by(GROUP, ID_num) %>%
+  summarise(MT = mean(MT), .groups = "drop")
+
+eq_pos <- reg_table %>%
+  ungroup() %>%
+  mutate(x = 1.5, y = 2.7 - 0.3 * row_number())
+
+p <- ggplot(means, aes(x = ID_num, y = MT, colour = GROUP)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE,
+              fullrange = TRUE) +
+  geom_text(data = eq_pos, aes(x = x, y = y, label = label),
+            hjust = 0, show.legend = FALSE) +
+  scale_x_continuous(breaks = c(1, 2), limits = c(0.8, 2.2)) +
+  labs(x = "ID", y = "Movement Time (s)", colour = "Group") +
+  theme_classic()
+
+p
+```
+
+## 1.6 Export the graph as a PDF
+
+```{r export}
+dir.create("figures", showWarnings = FALSE)
+ggsave("figures/fig3_MT_ID.pdf", plot = p, width = 8, height = 6,
+       units = "in")
+```
+
+
+## 1.7 Discuss the differences with the article
+
+Our regression equations (e.g., MT = 0.730 + 0.269 × ID for ap) differ from those in the article. Our method is simpler: we averaged the data per participant and per ID, then ran a classic ANOVA. Nevertheless, the GROUP × ID interaction is significant, F(2, 48) = 11.58, p < .001, so the conclusion is the same: the effect of difficulty depends on the group. The simple method keeps the main pattern of the data: a much steeper increase of movement time with ID in the pp group than in the ap and cp groups. The more sophisticated method of the article changes the exact values (slopes and intercepts), but not this pattern.
