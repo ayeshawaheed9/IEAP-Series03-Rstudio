@@ -5,6 +5,8 @@ date: today
 format: pdf
 ---
 
+Repository: <https://github.com/ayeshawaheed9/IEAP-Series03-Rstudio>
+
 # 1 ANOVA: Analysis of variance
 
 We want to reproduce Fig 3 of the article: the effect of difficulty (ID) on movement time (MT) in three groups (ap, cp, pp).
