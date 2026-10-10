@@ -1,0 +1,23 @@
+# Challenges and lessons learned
+
+## Challenges with the data and the statistics
+
+- **Unbalanced data.** ID3 was incomplete in group pp, and R3 was missing in groups ap and pp. We removed both so that all groups had the same conditions. *Lesson:* always count the observations by condition before running an ANOVA.
+- **Different names between the two parts.** The cleaned data were called `df` with the column `MT`, while the code of the analysis had been written with other names. *Lesson:* agree on object and column names before splitting the work.
+- **Different F value for ID.** We obtained F(1, 48) = 30.78 for the effect of ID, while the assignment gives 26.11. The groups have different numbers of participants (13, 19 and 19), which changes how this effect is computed. The conclusion does not change.
+- **Regression equations.** Our equations (for example MT = 0.730 + 0.269 × ID for ap) do not match those of the assignment. We tested a regression on the mean per participant and on all the trials, and neither gave the same equations. *Lesson:* a simpler method can give the same conclusion with different numbers, which is what we explain in section 1.7.
+- **Equations written on top of each other on the graph.** The three equations had the same height because the table was still grouped. Adding `ungroup()` fixed it.
+
+## Challenges with Git
+
+- **Commands written in the commit message.** We pasted `git add ... && git commit -m "..."` in the message field. We rewrote the messages with an interactive rebase and sent them with `git push --force-with-lease`. *Lesson:* the commands go in the terminal, only the message goes in the commit; and a history can only be rewritten before the merge, never on `main`.
+- **Terminal stuck in the editor.** The rebase opened the editor `nano`, and our commands were typed inside it. We learned to leave it with `Control + X`, `Y` and `Enter` (the `Control` key, not `Cmd`).
+- **Nothing to commit.** We committed a file that was not saved yet, so Git answered "nothing to commit". *Lesson:* check that the star next to the file name has disappeared before committing.
+- **File saved in the wrong folder.** A new file was saved in another project, so Git did not see it. We moved it into the repository. *Lesson:* check the folder in the save window.
+- **Working from the right branch.** We learned to update `main` with a pull before creating a new branch, and to check the name of the current branch in the Git panel.
+
+## What we learned
+
+- A clear Git history needs small commits with meaningful messages and at least one commit per question or blocs.
+- Branches and Pull Requests let two people work in parallel and review each other's work.
+- Reading an error message calmly, and asking what the tool is doing, solved most of our problems.
