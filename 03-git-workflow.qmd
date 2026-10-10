@@ -1,0 +1,33 @@
+# Git workflow analysis
+
+## How we organised the work
+
+The repository was created by Ayesha and is public. We split the assignment in two big parts, each on its own branch:
+
+- `Data_loading_and_cleaning` (Ayesha): sections 1.1 to 1.3, data loading and cleaning.
+- `Anova_and_data` (Jeanne): sections 1.3 to 1.7, mean per participant, ANOVA, regression by group, figure, PDF export and discussion.
+
+The other parts of the report were then written one by one, each on its own branch: `readme`, `sources`, `git-workflow` and `challenges`. Jeanne wrote these parts, since Ayesha, who owns the repository, reviewed and merged them.
+At the end of the project, the repository contains one branch per part, each merged through a Pull Request reviewed by the other member.
+
+## The steps we followed for each branch
+
+1. Update `main`, then create the branch from it.
+2. Work in a sub-document (for example `02-anova_and_data.qmd`) and make small commits, one per question or per chunk, with a message that says what the commit does.
+3. Push the branch and open a Pull Request with a short description.
+4. The other person reviews the Pull Request and leaves comments.
+5. We implement the requested changes, then Ayesha merges the Pull Request into `main`.
+
+The master document includes the sub-documents with `{{< include file.qmd >}}`, so each part could be written without touching the work of the other person.
+
+## What the reviews changed
+
+- During the first Pull Request, Jeanne pointed out that the data for ID3 in group pp were not completely missing (400 observations were available). Ayesha implemented the change before the merge.
+- During the second Pull Request, Ayesha noticed that Jeanne's commit messages contained the Git commands and not only the message. The 8 commit messages were rewritten before the merge, so the history of `main` is readable.
+- Ayesha also reminded us that the PDF rendered for the review was not the final submission, which led us to list the missing sections of the report.
+
+## What worked and what we would do differently
+
+What worked: working on separate branches prevented any conflict, and the Pull Requests forced us to explain our changes and to check each other's work.
+
+What we would do differently: create smaller branches from the start (one per question and not one per big part), so that the history shows at least one commit per question for both of us, and agree on the names of the R objects (`df`, `data_anova`) before writing the code.
