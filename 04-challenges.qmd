@@ -18,6 +18,6 @@
 
 ## What we learned
 
-- A clear Git history needs small commits with meaningful messages and at least one commit per question or blocs.
+- A clear Git history needs small commits with meaningful messages and at least one commit per question or per chunk of code.
 - Branches and Pull Requests let two people work in parallel and review each other's work.
 - Reading an error message calmly, and asking what the tool is doing, solved most of our problems.

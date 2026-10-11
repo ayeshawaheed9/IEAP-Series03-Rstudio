@@ -7,7 +7,7 @@ The repository was created by Ayesha and is public. We split the assignment in t
 - `Data_loading_and_cleaning` (Ayesha): sections 1.1 to 1.3, data loading and cleaning.
 - `Anova_and_data` (Jeanne): sections 1.3 to 1.7, mean per participant, ANOVA, regression by group, figure, PDF export and discussion.
 
-The other parts of the report were then written one by one, each on its own branch: `readme`, `sources`, `git-workflow` and `challenges`. Jeanne wrote these parts, since Ayesha, who owns the repository, reviewed and merged them.
+The other parts of the report were then written one by one, each on its own branch: `readme`, `sources`, `git-workflow`, `challenges`, `checklist`, and `final-report`. Jeanne wrote these parts, since Ayesha, who owns the repository, reviewed and merged them.
 At the end of the project, the repository contains one branch per part, each merged through a Pull Request reviewed by the other member.
 
 ## The steps we followed for each branch

@@ -10,8 +10,9 @@ Each part of the assignment was developed on its own Git branch. After review th
 
 | Branch | Member | Contribution |
 |---|---|---|
-| Data_loading_and_cleaning | Ayesha Waheed | Sections 1.1–1.3 – Questions, data loading, count of missing data and data cleaning |
+| Data_loading_and_cleaning | Ayesha Waheed | Creation of the public repository; sections 1.1–1.3 – Questions, data loading, count of missing data and data cleaning; review and merge of all the Pull Requests |
 | Anova_and_data | Jeanne Le Roux | Sections 1.3–1.7 – Mean per participant, mixed ANOVA, regression by group, figure, PDF export and discussion |
+| readme, sources, git-workflow, challenges, checklist, final-report | Jeanne Le Roux | README, data sources and references, Git workflow analysis, challenges and lessons learned, checklist, and final report (master document, link to the repository, final PDF) |
 | main | Group | Final integrated version containing the completed work |
 
 ## Project Objectives
@@ -36,6 +37,10 @@ IEAP-Series03-Rstudio/
 │   └── fig3_MT_ID.pdf
 ├── IEAP-Series03-Rstudio.qmd   (master document)
 ├── 02-anova_and_data.qmd       (included in the master document)
+├── 03-git-workflow.qmd
+├── 04-challenges.qmd
+├── 05-sources.qmd
+├── 06-checklist.qmd
 ├── IEAP-Series03-Rstudio.pdf
 ├── README.md
 └── LICENSE
