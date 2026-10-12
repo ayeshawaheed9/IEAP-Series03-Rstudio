@@ -8,17 +8,14 @@ This checklist follows the assignment and the grading criteria.
 - [x] Repository named `IEAP-Series03-Rstudio`, as in the grading criteria
 - [x] Clear and complete `README.md`
 - [x] `LICENSE` file (GPL-3.0)
-- [ ] Master document named `IEAP-Series03-Rstudio.qmd`
-- [ ] Corresponding PDF file in the repository
+- [x] Master document named `IEAP-Series03-Rstudio.qmd`
+- [x] Corresponding PDF file in the repository
 
-## Git history
+## Git history and content of the report
 
 - [x] Meaningful commit messages (only the message, without the Git commands)
-- [x] At least one commit per question of the report
+- [x] Regular commits with meaningful messages, at least one commit per part of the report
 - [x] One branch per part of the work, merged through a Pull Request reviewed by the other member
-
-## Content of the report
-
 - [x] Authors and date in the header
 - [x] Clickable link to the GitHub repository
 - [x] Analysis of our workflow strategy using Git
@@ -27,8 +24,5 @@ This checklist follows the assignment and the grading criteria.
 - [x] Data sources, with URLs
 - [x] Scientific references, with DOIs
 - [x] This checklist
-
-## Submission
-
 - [x] The master document includes all the sub-documents when rendering
 - [x] PDF file uploaded on Moodle
