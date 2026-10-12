@@ -15,6 +15,7 @@
 - **Nothing to commit.** We committed a file that was not saved yet, so Git answered "nothing to commit". *Lesson:* check that the star next to the file name has disappeared before committing.
 - **File saved in the wrong folder.** A new file was saved in another project, so Git did not see it. We moved it into the repository. *Lesson:* check the folder in the save window.
 - **Working from the right branch.** We learned to update `main` with a pull before creating a new branch, and to check the name of the current branch in the Git panel.
+- **Wrong branch name.** We created a branch called `Git_workflow` and tried to push `git-workflow`, so Git answered "src refspec does not match any". *Lesson:* Git is case-sensitive; check the name with `git branch` and rename the branch with `git branch -m`.
 
 ## What we learned
 
